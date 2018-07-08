@@ -43,10 +43,6 @@
 --|
 ------------------------------------------------------------------------------*/
 
-
-// Setup the garage module to talk over AWS MQTT
-extern void GarageSetupAWSMQTT(AWS_IoT_Client *AWSMQTTclient);
-
 // Input from external commands. May require a response.
 extern void GarageHandleDataFromAWS(const char *pJsondataFromAWS);
 
