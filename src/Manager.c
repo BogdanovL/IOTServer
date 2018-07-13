@@ -97,6 +97,7 @@ static int lanMQTTInit();
 
 // LAN-MQTT message delivered. We don't currently care. TODO
 static void lanMQTTMsgDelivered(void *context, MQTTClient_deliveryToken dt) {
+	printf("Garage Got It\n");
 	return;
 }
 // LAN-MQTT message received
@@ -339,7 +340,11 @@ extern void PublishToAWS(uint8_t count, ...) {
 			x = 0;
 	do
 	{
+		// Well! looks liek this is not thread-safe
+		pthread_mutex_lock(&lock);
 		rc = aws_iot_shadow_yield(&AWSMQTTclient, 200);
+	    pthread_mutex_unlock(&lock);
+
 		if (NETWORK_ATTEMPTING_RECONNECT == rc) {
 			sleep(1);
 		}
