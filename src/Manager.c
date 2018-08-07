@@ -335,8 +335,7 @@ extern void PublishToAWS(uint8_t count, ...) {
 
 	if (SUCCESS != rc)
 		return;
-	static unsigned x = 0;
-			x = 0;
+	unsigned x = 0;
 	do
 	{
 		// Not thread-safe apparently
@@ -348,7 +347,7 @@ extern void PublishToAWS(uint8_t count, ...) {
 			sleep(1);
 		}
 
-
+		// Temporary workaround for "not idle" situation. I believe this is threading related. 
 		if (MQTT_CLIENT_NOT_IDLE_ERROR == rc)
 		{
 			printf("Ran into not idle... %u times\n", ++x);
@@ -358,9 +357,9 @@ extern void PublishToAWS(uint8_t count, ...) {
 				x = 0;
 				aws_iot_shadow_disconnect(&AWSMQTTclient);
 				awsMQTTInit();
-				printf("RESTARDED\n");
-				return;
+				printf("RESTARTED\n");
 				fflush(stdout);
+				return;
 			}
 
 		}
