@@ -339,7 +339,7 @@ extern void PublishToAWS(uint8_t count, ...) {
 			x = 0;
 	do
 	{
-		// Well! looks liek this is not thread-safe
+		// Not thread-safe apparently
 		pthread_mutex_lock(&lock);
 		rc = aws_iot_shadow_yield(&AWSMQTTclient, 200);
 	    	pthread_mutex_unlock(&lock);
@@ -368,7 +368,7 @@ extern void PublishToAWS(uint8_t count, ...) {
 	} while (SUCCESS != rc && NETWORK_RECONNECTED != rc);
 	do
 	{
-		// Well! looks liek this is not thread-safe
+	// Not thread-safe apparently
 	    pthread_mutex_lock(&lock);
 		rc = aws_iot_shadow_update(&AWSMQTTclient, AWS_IOT_MY_THING_NAME,
 				jsonDocBuff, shadowUpdateStatusCallback, NULL, 4,
@@ -405,9 +405,12 @@ int main(void) {
 	while (1)
 	{
 		relativeSecs++;
+		
+		// Not thread-safe apparently
 		pthread_mutex_lock(&lock);
 		aws_iot_shadow_yield(&AWSMQTTclient, 200);
 		pthread_mutex_unlock(&lock);
+		
 		MQTTClient_yield();
 		sleep(1);
 		// Periodically check on module health
