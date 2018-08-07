@@ -311,7 +311,6 @@ extern void PublishToLAN(const char *topic, const char*msg)
 // the AWS IOT cloud (loss of connectivity to a module).
 #define MAX_LENGTH_OF_UPDATE_JSON_BUFFER 200
 extern void PublishToAWS(uint8_t count, ...) {
-	//while (publishingActive) usleep(5000);
 
 	char jsonDocBuff[MAX_LENGTH_OF_UPDATE_JSON_BUFFER];
 	size_t sizeOfJsonDocBuff = NELEMS(jsonDocBuff);
