@@ -124,7 +124,7 @@ static int lanMQTTNewMsgReceived(void *context, char *topicName, int topicLen,
 // detect the loss of connectivity indirectly (via module health check) and
 // report it to AWS IOT.
 static void lanMQTTConnLost(void *context, char *cause) {
-	printf("good morning\n");
+	printf("Reconnecting...\n");
 	// Quick and dirty. Indefinately attemp to reconnect to MQTT server
 	while (MQTTCLIENT_SUCCESS != lanMQTTInit())
 		sleep(2);
