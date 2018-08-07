@@ -343,7 +343,7 @@ extern void PublishToAWS(uint8_t count, ...) {
 		// Well! looks liek this is not thread-safe
 		pthread_mutex_lock(&lock);
 		rc = aws_iot_shadow_yield(&AWSMQTTclient, 200);
-	    pthread_mutex_unlock(&lock);
+	    	pthread_mutex_unlock(&lock);
 
 		if (NETWORK_ATTEMPTING_RECONNECT == rc) {
 			sleep(1);
@@ -406,7 +406,9 @@ int main(void) {
 	while (1)
 	{
 		relativeSecs++;
+		pthread_mutex_lock(&lock);
 		aws_iot_shadow_yield(&AWSMQTTclient, 200);
+		pthread_mutex_unlock(&lock);
 		MQTTClient_yield();
 		sleep(1);
 		// Periodically check on module health
