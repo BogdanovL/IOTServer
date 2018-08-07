@@ -335,6 +335,7 @@ extern void PublishToAWS(uint8_t count, ...) {
 
 	if (SUCCESS != rc)
 		return;
+	// This var is involved in a temporary workaround for dealing with "nod idle" return code
 	unsigned x = 0;
 	do
 	{
